@@ -10,7 +10,7 @@ function Stats() {
     async function getStats() {
         const response = await fetch('http://localhost/api/stats');
         const data = await response.json();
-        setTotalContacts(data.totalContacts);
+        setTotalContacts(data.totalContacts);   
         setTotalPhones(data.totalPhones);
         setLastUpdatedContact(data.lastUpdatedContact);
         setOldestContact(data.oldestContact);

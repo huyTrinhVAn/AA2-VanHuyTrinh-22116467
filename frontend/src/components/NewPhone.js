@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 function NewPhone(props) {
-    const {contact, phones, setPhones} = props;
+    const { contact, phones, setPhones } = props;
     const [number, setNumber] = useState('');
     const [name, setName] = useState('');
 
@@ -29,13 +29,20 @@ function NewPhone(props) {
         setName('');
     }
 
-	return (
+    return (
         <form onSubmit={createPhone} onClick={(e) => e.stopPropagation()} className='new-phone'>
-            <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)} value={name}/>
-            <input type='text' placeholder='Phone Number' onChange={(e) => setNumber(e.target.value)} value={number}/>
-            <button className='button green' type='submit'>Add</button>
+            {/* <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)} value={name} /> */}
+            <select onChange={e => setName(e.target.value)} value={name} >
+                <option value="">Select category</option>
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Others">Others</option>
+            </select>
+            <input type='text' placeholder='Phone Number' onChange={(e) => setNumber(e.target.value)} value={number} />
+            <button className='button green' type='submit'>Add Choiru's Phone</button>
         </form>
-	);
+    );
 }
 
 export default NewPhone;
