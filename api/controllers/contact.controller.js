@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 // Create contact
 exports.create = (req, res) => {
     const contact = {
-        name: req.body.name,
+        name: req.body.name
     };
 
     Contacts.create(contact)
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                err.message || "Some error occurred"
+                    err.message || "Some error occurred"
             });
         });
 };
@@ -47,7 +47,7 @@ exports.findOne = (req, res) => {
                 message: "Error retrieving Contact with id=" + id
             });
         }
-    );
+        );
 };
 
 // Update one contact by id
@@ -57,22 +57,22 @@ exports.update = (req, res) => {
     Contacts.update(req.body, {
         where: { id: id }
     })
-    .then(num => {
-        if (num == 1) {
-            res.send({
-                message: "Contact was updated successfully."
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Contact was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Contact`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Contact with id=" + id
             });
-        } else {
-            res.send({
-                message: `Cannot update Contact`
-            });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: "Error updating Contact with id=" + id
         });
-    });
 };
 
 // Delete one contact by id
@@ -82,25 +82,25 @@ exports.delete = (req, res) => {
     Phones.destroy({
         where: { contactId: id }
     })
-    .then(num => {
-        Contacts.destroy({
-            where: { id: id }
-        })
         .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Contact was deleted successfully!"
+            Contacts.destroy({
+                where: { id: id }
+            })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            message: "Contact was deleted successfully!"
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot delete Contact`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: "Could not delete Contact with id=" + id
+                    });
                 });
-            } else {
-                res.send({
-                    message: `Cannot delete Contact`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Could not delete Contact with id=" + id
-            });
         });
-    });
 };

@@ -34,7 +34,7 @@ function Contact(props) {
     }
 
 
-    
+
     return (
         <div key={contact.id} className='contact' onClick={(e) => setExpanded(!expanded)}>
             <div className='title'>
