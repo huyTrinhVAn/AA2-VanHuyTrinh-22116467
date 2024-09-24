@@ -38,7 +38,13 @@ function Contact(props) {
     return (
         <div key={contact.id} className='contact' onClick={(e) => setExpanded(!expanded)}>
             <div className='title'>
-                <h3>{contact.name}</h3>
+                {/* Hiển thị name và address trên các dòng riêng biệt */}
+                <div>
+                    <h3>Name: {contact.name}</h3>
+                </div>
+                <div>
+                    <h3>Address: {contact.address}</h3>
+                </div>
                 <button className='button red' onClick={doDelete}>Delete Contact</button>
             </div>
             <div style={expandStyle}>
@@ -48,5 +54,4 @@ function Contact(props) {
         </div>
     );
 }
-
 export default Contact;
