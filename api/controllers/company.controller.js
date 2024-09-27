@@ -40,7 +40,7 @@ exports.findAll = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some err"
+                message: err.message || "Some error occured"
             })
         })
 }
@@ -64,28 +64,35 @@ exports.findOne = (req, res) => {
 }
 // Update a specific company for a contact
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const company_id = req.params.companyId;
-    companies.update(req.body, {
-        where: { company_id: company_id, contact_id: req.params.contactId }
-    })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Company was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Company with id = ${company_id}`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating company with id=" + company_id
-            });
+    const contact_id = req.params.contactId;
+
+    try {
+        // Update the company details in the database
+        const [num] = await companies.update(req.body, {
+            where: { company_id: company_id, contact_id: contact_id }
         });
-}
+
+        if (num === 1) {
+            // Fetch the updated company to return it to the frontend
+            const updatedCompany = await companies.findOne({
+                where: { company_id: company_id, contact_id: contact_id }
+            });
+
+            if (updatedCompany) {
+                return res.status(200).json(updatedCompany); // Send the updated company data
+            } else {
+                return res.status(404).json({ message: "Company not found after update" });
+            }
+        } else {
+            return res.status(400).json({ message: `Cannot update Company with id=${company_id}. Company not found or request body is empty.` });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: "Error updating company with id=" + company_id });
+    }
+};
+
 
 //  Delete a company for a contact
 
