@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import NewCompany from "./NewCompany";
-import Company from "./Company";
+import NewCompany from "./NewCompany.js"
+import Company from "./Company.js";
 
 function CompanyList(props) {
     const { contact, companies, setCompanies } = props;

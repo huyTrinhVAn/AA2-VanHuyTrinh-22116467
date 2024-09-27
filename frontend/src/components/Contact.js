@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';  // import useEffect
 import PhoneList from './PhoneList.js';
-import CompanyList from './CompanyList.jsx';
-
+import CompanyList from './CompanyList.js';
 function Contact(props) {
     const { contact, contacts, setContacts } = props;
     const [expanded, setExpanded] = useState(false);
@@ -45,7 +44,6 @@ function Contact(props) {
     return (
         <div key={contact.id} className='contact' onClick={(e) => setExpanded(!expanded)}>
             <div className='title'>
-                {/* Hiển thị name và address trên các dòng riêng biệt */}
                 <div>
                     <h3>Name: {contact.name}</h3>
                 </div>
@@ -57,7 +55,7 @@ function Contact(props) {
             <div style={expandStyle}>
                 <hr />
                 <PhoneList phones={phones} setPhones={setPhones} contact={contact} />
-                <CompanyList companies={companies} setCompanies={setCompanies} contact={contact} /> {/* Add CompanyList here */}
+                <CompanyList companies={companies} setCompanies={setCompanies} contact={contact} />
             </div>
         </div>
     );
