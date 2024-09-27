@@ -135,7 +135,15 @@
     flex-direction: row;
     align-items: center;
 }
-
+.new-company {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.new-company > input {
+    margin-right: 5px;
+    width: 100%;
+}
 .new-phone > input {
     margin-right: 5px;
     width: 100%;
