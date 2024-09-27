@@ -180,6 +180,7 @@ After:
 Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)
 
 1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)
+```bash
 Get  contact API (GET):
 http get http://localhost/api/contacts
 HTTP/1.1 200 OK
@@ -207,7 +208,9 @@ X-Powered-By: Express
         "updatedAt": "2024-09-24T02:17:32.654Z"
     }
 ]
+```
 2) Show the API command for “Add Contact” and provide a screenshot of the output (1 Mark)
+```bash
 Add contact API(POST):
 http post http://localhost/api/contacts name="Khoa"
 HTTP/1.1 200 OK
@@ -227,7 +230,9 @@ X-Powered-By: Express
     "name": "Khoa",
     "updatedAt": "2024-09-24T02:17:32.654Z"
 }
+```
 3) Show the API command for “Delete Contact” and provide a screenshot of the output (1 Marks)
+```bash
 Delete contact (DELETE)
 http delete  http://localhost/api/contacts/2
 HTTP/1.1 200 OK
@@ -244,7 +249,9 @@ X-Powered-By: Express
 {
     "message": "Contact was deleted successfully!"
 }
+```
 4) Show the API command for “Update Contact” and provide a screenshot of the output (1 Marks)
+```bash
 Update contact (  PUT)
 http put http://localhost/api/contacts/1 name="HuyTrinh"
 HTTP/1.1 200 OK
@@ -261,8 +268,9 @@ X-Powered-By: Express
 {
     "message": "Contact was updated successfully."
 }
-
+```
 5) Show the API command for “Show Phone” and provide a screenshot of the output (1 Mark)
+```bash
 Show phone (GET)
 http get http://localhost/api/contacts/3/phones
 HTTP/1.1 200 OK
@@ -286,7 +294,9 @@ X-Powered-By: Express
         "updatedAt": "2024-09-24T02:58:48.330Z"
     }
 ]
+```
 6) Show the API command for “Add Phone” and provide a screenshot of the output (1 Marks)
+```bash
 Add phone (POST)
 http post http://localhost/api/contacts/3/phones name="Home" number="011111”
 HTTP/1.1 200 OK
@@ -308,7 +318,9 @@ X-Powered-By: Express
     "number": "011111",
     "updatedAt": "2024-09-24T02:58:48.330Z"
 }
+```
 7) Show the API command for “Delete Phone” and provide a screenshot of the output (1 Marks)
+```bash
 Delete phone (DELETE)
 http delete http://localhost/api/contacts/3/phones/4
 HTTP/1.1 200 OK
@@ -325,7 +337,9 @@ X-Powered-By: Express
 {
     "message": "Phone was deleted successfully!"
 }
+```
 8) Show the API command for “Update Phone” and provide a screenshot of the output (1 Marks)
+```bash
 Update phone (PUT)
 http put http://localhost/api/contacts/3/phones/4 name="Work"
 HTTP/1.1 200 OK
@@ -342,4 +356,4 @@ X-Powered-By: Express
 {
     "message": "Phone was updated successfully."
 }
-
+``` 
