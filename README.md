@@ -136,3 +136,210 @@ http get http://localhost/api/contacts/1/phones
 ```
 
 ### Phone API
+
+Task 1
+1) Change the button label from contact component from "Delete" to "Delete Contact"
+Change at contact.js component
+
+Origin: 
+![alt text](./frontend/public/img/T1UIQ1.png)
+Code:
+![alt text](./frontend/public/img/T1img2.png)
+
+After: 
+![alt text](./frontend/public/img/T1img3Q1.png)
+Code:
+![alt text](./frontend/public/img/T1img4Q1.png)
+2) Change the button label in phone component from "Add" to e.g "Add Choiru’s Phone" (3 Marks)
+Before:
+![alt text](./frontend/public/img/T1img1Q2.png)
+![alt text](./frontend/public/img/T1img2Q2.png)
+After:
+![alt text](./frontend/public/img/T1img3Q2.png)
+![alt text](./frontend/public/img/T1img4Q2.png)
+
+3) Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories (3
+Marks)
+Before:
+![alt text](./frontend/public/img/T1img1Q3.png)
+![alt text](./frontend/public/img/T!img2Q3.png)
+
+After:
+![alt text](./frontend/public/img/T1img3Q3.png)
+![alt text](./frontend/public/img/T1img4Q3.png)
+
+4) In the <tr> element of the table, change the label "Name" to "Phone Type" (2 Marks)
+
+Before:
+![alt text](./frontend/public/img/T1img1Q4.png)
+![alt text](./frontend/public/img/T1img2Q4.png)
+After:
+![alt text](./frontend/public/img/T1img3Q4.png)
+![alt text](./frontend/public/img/T1img4Q4.png)
+
+Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)
+
+1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)
+Get  contact API (GET):
+http get http://localhost/api/contacts
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 203
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 02:20:51 GMT
+ETag: W/"cb-Vs6d2BKKVA+jWJLRG7cPTI262CI"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+[
+    {
+        "createdAt": "2024-09-24T02:12:44.445Z",
+        "id": 1,
+        "name": "Huy ",
+        "updatedAt": "2024-09-24T02:12:44.445Z"
+    },
+    {
+        "createdAt": "2024-09-24T02:17:32.654Z",
+        "id": 2,
+        "name": "Khoa",
+        "updatedAt": "2024-09-24T02:17:32.654Z"
+    }
+]
+2) Show the API command for “Add Contact” and provide a screenshot of the output (1 Mark)
+Add contact API(POST):
+http post http://localhost/api/contacts name="Khoa"
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 100
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 02:17:32 GMT
+ETag: W/"64-VRrKSLehFglbhMKtnSWgls7LYn8"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "createdAt": "2024-09-24T02:17:32.654Z",
+    "id": 2,
+    "name": "Khoa",
+    "updatedAt": "2024-09-24T02:17:32.654Z"
+}
+3) Show the API command for “Delete Contact” and provide a screenshot of the output (1 Marks)
+Delete contact (DELETE)
+http delete  http://localhost/api/contacts/2
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 47
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 02:24:32 GMT
+ETag: W/"2f-i0D5Qo4IGfH+OpTTITmyTnSzFvU"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Contact was deleted successfully!"
+}
+4) Show the API command for “Update Contact” and provide a screenshot of the output (1 Marks)
+Update contact (  PUT)
+http put http://localhost/api/contacts/1 name="HuyTrinh"
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 47
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 02:35:57 GMT
+ETag: W/"2f-9DEigpdI8FmatdY6qgJYc7CM5hQ"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Contact was updated successfully."
+}
+
+5) Show the API command for “Show Phone” and provide a screenshot of the output (1 Mark)
+Show phone (GET)
+http get http://localhost/api/contacts/3/phones
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 134
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 03:00:21 GMT
+ETag: W/"86-gsIiwLVOvUdHylIsbo6XQkIoNUs"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+[
+    {
+        "contactId": 3,
+        "createdAt": "2024-09-24T02:58:48.330Z",
+        "id": 4,
+        "name": "Home",
+        "number": "011111",
+        "updatedAt": "2024-09-24T02:58:48.330Z"
+    }
+]
+6) Show the API command for “Add Phone” and provide a screenshot of the output (1 Marks)
+Add phone (POST)
+http post http://localhost/api/contacts/3/phones name="Home" number="011111”
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 132
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 02:58:48 GMT
+ETag: W/"84-CmKdS9bWy7s3IBY8IucRYr414/E"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "contactId": 3,
+    "createdAt": "2024-09-24T02:58:48.330Z",
+    "id": 4,
+    "name": "Home",
+    "number": "011111",
+    "updatedAt": "2024-09-24T02:58:48.330Z"
+}
+7) Show the API command for “Delete Phone” and provide a screenshot of the output (1 Marks)
+Delete phone (DELETE)
+http delete http://localhost/api/contacts/3/phones/4
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 45
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 03:09:24 GMT
+ETag: W/"2d-FdOer7L1Hk5YcQlrlpn01BrNJmA"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Phone was deleted successfully!"
+}
+8) Show the API command for “Update Phone” and provide a screenshot of the output (1 Marks)
+Update phone (PUT)
+http put http://localhost/api/contacts/3/phones/4 name="Work"
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 45
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 03:07:05 GMT
+ETag: W/"2d-p9Lx2PQGimApZ9nkrVa0opZVZlQ"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Phone was updated successfully."
+}
+
