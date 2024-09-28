@@ -357,3 +357,231 @@ X-Powered-By: Express
     "message": "Phone was updated successfully."
 }
 ``` 
+Task 3: - DATABASE MODELLING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE
+DATABASE MODIFICATION DONE (22 MARKS)
+
+1) Modify the contacts Table (5 Marks):
+``` bash
+a. Update the contacts table to include the following attributes:
+i. id
+ii. Name
+iii. Address
+```
+Code :  Change at contact.model.js file in models folder:
+![alt text](./frontend/public/img/T3img1Q1.png)
+Result in database:
+![alt text](./frontend/public/img/T3img2Q1.png)
+2) Modify the phones Table (5 Marks):
+```bash
+a. Update the phones table to include the following attributes:
+i. id
+ii. phone_type
+iii. phone_number
+iv. contactId
+```
+Change code in phone.model.js file in models folder
+![alt text](./frontend/public/img/T3img1Q2.png)
+Result in database:
+![alt text](./frontend/public/img/T3img2Q2.png)
+
+3) Adjust the Front-End (4 Marks):
+To change contact frontend, first we need to change create method in contact.controller.js  file to help us create a new phone with address attribute 
+![alt text](./frontend/public/img/T3img1Q3.png)
+After that we change code  in contact.js and NewContact.js in components folder to get the suitable frontend:
+![alt text](./frontend/public/img/T3img2Q3.png)
+![alt text](./frontend/public/img/T3img3Q3.png)
+Result:
+![alt text](./frontend/public/img/T3img4Q3.png)
+We do the same with Phone.Change code in create phone method in phone.controller.js 
+![alt text](./frontend/public/img/T3img5Q3.png)
+Change at phone.js, PhoneList,js and NewPhone.js component to get the suitable frontend:
+![alt text](./frontend/public/img/T3img6Q3.png)
+![alt text](./frontend/public/img/T3img7Q3.png)
+![alt text](./frontend/public/img/T3img8Q3.png)
+Result:
+![alt text](./frontend/public/img/T3img9Q3.png)
+4) Test All APIs related to table modified contacts and phones (8 Marks):
+Contact API
+### Add contact API (POST) 
+``` bash
+http post http://localhost/api/contacts name="Khoa" address=”Ha Noi”
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 119
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:46:17 GMT
+ETag: W/"77-ujajulYXCHdYPgQudiQ35JWsSbY"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "address": "Ha Noi",
+    "createdAt": "2024-09-24T11:46:17.888Z",
+    "id": 3,
+    "name": "Khoa",
+    "updatedAt": "2024-09-24T11:46:17.888Z"
+}
+
+```
+### Get contact API (GET)
+``` bash
+http get http://localhost/api/contacts
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 242
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:47:08 GMT
+ETag: W/"f2-yOps9jdrFqdZEQOjTNiEv7RQsKE"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+[
+    {
+        "address": "Viet Nam",
+        "createdAt": "2024-09-24T07:02:43.679Z",
+        "id": 1,
+        "name": "huy",
+        "updatedAt": "2024-09-24T07:02:43.679Z"
+    },
+    {
+        "address": "Ha Noi",
+        "createdAt": "2024-09-24T11:46:17.888Z",
+        "id": 3,
+        "name": "Khoa",
+        "updatedAt": "2024-09-24T11:46:17.888Z"
+    }
+]
+```
+### Delete contact (DELETE)
+``` bash
+http delete  http://localhost/api/contacts/3
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 47
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:47:59 GMT
+ETag: W/"2f-i0D5Qo4IGfH+OpTTITmyTnSzFvU"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Contact was deleted successfully!"
+}
+``` 
+### Update contact  (PUT)
+``` bash
+http put http://localhost/api/contacts/1 name=”Huy Van”  address =”Nam Dinh”
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 47
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:54:06 GMT
+ETag: W/"2f-9DEigpdI8FmatdY6qgJYc7CM5hQ"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Contact was updated successfully."
+}
+```
+### Add phone API (POST)
+``` bash
+http post http://localhost/api/contacts/1/phones phone_type="Home" phone_number=” 01234567”
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 146
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:55:48 GMT
+ETag: W/"92-PL7Fk5b/YUOsLjjOiafGHiP97Qo"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "contactId": 1,
+    "createdAt": "2024-09-24T11:55:48.671Z",
+    "id": 2,
+    "phone_number": "01234567",
+    "phone_type": "Home",
+    "updatedAt": "2024-09-24T11:55:48.671Z"
+}
+```
+### Show Phone API (GET)
+``` bash
+http get http://localhost/api/contacts/1/phones
+ HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 294
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 11:58:43 GMT
+ETag: W/"126-hy86kFdL2gdWmkk5uWMi22PZroQ"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+[
+    {
+        "contactId": 1,
+        "createdAt": "2024-09-24T07:02:48.888Z",
+        "id": 1,
+        "phone_number": "1234567",
+        "phone_type": "Work",
+        "updatedAt": "2024-09-24T07:02:48.888Z"
+    },
+    {
+        "contactId": 1,
+        "createdAt": "2024-09-24T11:55:48.671Z",
+        "id": 2,
+        "phone_number": "01234567",
+        "phone_type": "Home",
+        "updatedAt": "2024-09-24T11:55:48.671Z"
+    }
+]
+```
+### Update phone (PUT)
+``` bash
+http put http://localhost/api/contacts/1/phones/2 phone_type="Work" phone_number=” 11111111”
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 45
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 12:02:24 GMT
+ETag: W/"2d-p9Lx2PQGimApZ9nkrVa0opZVZlQ"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Phone was updated successfully."
+}
+```
+### Delete Phone (DELETE)
+``` bash
+http delete http://localhost/api/contacts/1/phones/2
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 45
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 12:03:39 GMT
+ETag: W/"2d-FdOer7L1Hk5YcQlrlpn01BrNJmA"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Phone was deleted successfully!"
+}
+```
+
