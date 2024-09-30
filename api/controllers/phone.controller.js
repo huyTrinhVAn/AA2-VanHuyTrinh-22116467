@@ -59,28 +59,33 @@ exports.findOne = (req, res) => {
 };
 
 // Update one phone by id
-exports.update = (req, res) => {
-    const id = req.params.phoneId;
+exports.update = async (req, res) => {
+    const phoneId = req.params.phoneId;
+    const contactId = req.params.contactId;
 
-    Phones.update(req.body, {
-        where: { id: id, contactId: req.params.contactId }
-    })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Phone was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Phone`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating Phone with id=" + id
-            });
+    try {
+        // Update the phone details in the database
+        const [num] = await Phones.update(req.body, {
+            where: { id: phoneId, contactId: contactId }
         });
+
+        if (num === 1) {
+            // Fetch the updated phone to return it to the frontend
+            const updatedPhone = await Phones.findOne({
+                where: { id: phoneId, contactId: contactId }
+            });
+
+            if (updatedPhone) {
+                return res.status(200).json(updatedPhone); // Send the updated phone data
+            } else {
+                return res.status(404).json({ message: "Phone not found after update" });
+            }
+        } else {
+            return res.status(400).json({ message: `Cannot update Phone with id=${phoneId}. Phone not found or request body is empty.` });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: "Error updating phone with id=" + phoneId });
+    }
 };
 
 // Delete one phone by id
