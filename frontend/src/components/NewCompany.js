@@ -24,7 +24,7 @@ function NewCompany(props) {
         setAddress('');
     }
     return (
-        <form onSubmit={createCompany} onClick={(e) => e.stopPropagation()} className="new-company" >\
+        <form onSubmit={createCompany} onClick={(e) => e.stopPropagation()} className="new-company" >
             <input type="text" placeholder="Company Name" onChange={(e) => setName(e.target.value)} value={company_name} />
             <input type="text" placeholder="Company Address" onChange={(e) => setAddress(e.target.value)} value={company_address} />
             <button className='button green' type='submit'>Add {contact.name}'s company</button>

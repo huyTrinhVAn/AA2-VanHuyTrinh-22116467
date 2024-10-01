@@ -13,9 +13,10 @@ function PhoneList(props) {
                     <tr>
                         <th>Phone Type</th>
                         <th>Phone Number</th>
-                        <th></th>
+                        <th>Modification</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {
                         phones.map((phone) => {
