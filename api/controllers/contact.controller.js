@@ -9,7 +9,6 @@ exports.create = (req, res) => {
         name: req.body.name,
         address: req.body.address
     };
-
     Contacts.create(contact)
         .then(data => {
             res.send(data);

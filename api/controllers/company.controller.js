@@ -73,7 +73,6 @@ exports.update = async (req, res) => {
         const [num] = await companies.update(req.body, {
             where: { company_id: company_id, contact_id: contact_id }
         });
-
         if (num === 1) {
             // Fetch the updated company to return it to the frontend
             const updatedCompany = await companies.findOne({
@@ -95,6 +94,7 @@ exports.update = async (req, res) => {
 
 
 //  Delete a company for a contact
+
 
 exports.delete = (req, res) => {
     const company_id = req.params.companyId;

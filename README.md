@@ -585,3 +585,106 @@ X-Powered-By: Express
 }
 ```
 
+TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS
+1) Table creation  
+To create a table name "companies" , I will create a file named "company.model.js" in models folder
+![alt text](./frontend/public/img/T4img1Q1.png)
+After saving , this is the result in the database:
+![alt text](./frontend/public/img/T4img2Q1.png)
+2) API Creation
+So , to creating new API, I defined routes in a file called "companies.routes.js" in routes folder
+![alt text](./frontend/public/img/T4img1Q2.png)
+And to define method in each route, I make a new file named company.controller.js in controller folder
+![alt text](./frontend/public/img/T4img2Q2.png)
+And to make all of these things worked, I have to define them in app,js file 
+![alt text](./frontend/public/img/T4img3Q2.png)
+And now this is API test result:
+### ADD COMPANY API (POST)
+```bash
+http post http://localhost/api/contacts/1/companies company_name="VietTel" company_address="HaNoi"
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 160
+Content-Type: application/json; charset=utf-8
+Date: Sun, 06 Oct 2024 21:35:33 GMT
+ETag: W/"a0-bn5wp9L2U5oRAjK7yn8Kd0XxTd4"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "company_address": "HaNoi",
+    "company_id": 1,
+    "company_name": "VietTel",
+    "contact_id": 1,
+    "createdAt": "2024-10-06T21:35:32.980Z",
+    "updatedAt": "2024-10-06T21:35:32.980Z"
+}
+```
+### SHOW COMPANY API (GET)
+```bash
+http get http://localhost/api/contacts/1/companies
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 162
+Content-Type: application/json; charset=utf-8
+Date: Sun, 06 Oct 2024 21:37:32 GMT
+ETag: W/"a2-Bs7jeohLrNjjvKHlCOo4PsNb45g"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+[
+    {
+        "company_address": "HaNoi",
+        "company_id": 1,
+        "company_name": "VietTel",
+        "contact_id": 1,
+        "createdAt": "2024-10-06T21:35:32.980Z",
+        "updatedAt": "2024-10-06T21:35:32.980Z"
+    }
+]
+```
+### UPDATE COMPANY (PUT)
+```bash
+http put http://localhost/api/contacts/1/companies/1 company_name="Amazon" company_address="Melbourne"
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 163
+Content-Type: application/json; charset=utf-8
+Date: Sun, 06 Oct 2024 21:41:07 GMT
+ETag: W/"a3-rfOPA2VY5tWyggO5nztmZWRngTs"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "company_address": "Melbourne",
+    "company_id": 1,
+    "company_name": "Amazon",
+    "contact_id": 1,
+    "createdAt": "2024-10-06T21:35:32.980Z",
+    "updatedAt": "2024-10-06T21:41:07.538Z"
+}
+```
+### DELETE COMPANY (DELETE)
+```bash
+http delete http://localhost/api/contacts/1/companies/1
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://localhost:3000
+Connection: keep-alive
+Content-Length: 47
+Content-Type: application/json; charset=utf-8
+Date: Sun, 06 Oct 2024 21:44:41 GMT
+ETag: W/"2f-goeWLYgQgcZh1o2QS0V4ovFdEa0"
+Server: nginx/1.25.1
+Vary: Origin
+X-Powered-By: Express
+
+{
+    "message": "Company was deleted successfully!"
+}
+```
