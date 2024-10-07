@@ -1,74 +1,17 @@
 # README.md
 
-IMPORTANT: Once you've cloned this to your forked repository, ensure that you continuously update this document as you complete each task to demonstrate your ongoing progress.
 
-Please include your shared repository link here:
-
-Example:
-Choiru's shared repository: https://github.com/choiruzain-latrobe/Assignment2.git
+Van Huy Trinh's shared repository: https://github.com/huyTrinhVAn/AA2-VanHuyTrinh-22116467
 
 
-Make sure for **your case it is in Private**
-## Access Database
-1 **Plsql Cheat Sheet:**
-You can refer to the PostgreSQL cheat sheet [here](https://www.postgresqltutorial.com/postgresql-cheat-sheet/).
 
-2 **Know the Container ID:**
-To find out the container ID, execute the following command:
-   ```bash
-   docker ps
-    9958a3a534c9   testsystem-nginx           "/docker-entrypoint.…"   6 minutes ago   Up 6 minutes   0.0.0.0:80->80/tcp   testsystem-nginx-1
-    53121618baa4   testsystem-frontend        "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes   3000/tcp             testsystem-frontend-1
-    c89e46ac94b0   testsystem-api             "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes   5000/tcp             testsystem-api-1
-    9f4aea7cf538   postgres:15.3-alpine3.18   "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes   5432/tcp             testsystem-db-1
-   ```
-3. Running the application
-
-**docker compose command:**
-   ```bash
-   docker compose up --build
-   ```
-
-4 **Access postgreSQL in the container:**
-Once you have the container ID, you can execute the container using the following command:
-You will see the example of running the PostgreSQL inside the container.
-   ```bash
-   docker exec -it testsystem-db-1 psql -U postgres
-   choiruzain@MacMarichoy TestSystem % docker exec -it testsystem-db-1 psql -U postgres                                       
-   psql (15.3)
-   Type "help" for help.
-   
-   postgres=# \dt
-             List of relations
-    Schema |   Name   | Type  |  Owner   
-   --------+----------+-------+----------
-    public | contacts | table | postgres
-    public | phones   | table | postgres
-   (2 rows)
-  
-    postgres=# select * from contacts;
-    id |  name  |         createdAt         |         updatedAt         
-   ----+--------+---------------------------+---------------------------
-     1 | Helmut | 2024-08-08 11:57:57.88+00 | 2024-08-08 11:57:57.88+00
-    (1 row)
-    postgres=# select * from phones;
-    id | phone_type |   number    | contactId |         createdAt          |         updatedAt          
-   ----+------------+-------------+-----------+----------------------------+----------------------------
-     1 | Work       | 081431      |         1 | 2024-08-08 11:59:04.386+00 | 2024-08-08 11:59:04.386+00
-
-
-postgres=# select * from contacts;
-   ```
-Replace `container_ID` with the actual ID of the container you want to execute.
-
-## Executing API
 
 
 ### Phone API
 
 Task 1
 1) Change the button label from contact component from "Delete" to "Delete Contact" <br/>
-Change at ```contact.js``` component <br/>
+Change at ```contact.js``` in  ```components``` folder <br/>
 
 Origin:<br/>
 ![alt text](./frontend/public/img/T1UIQ1.png)
@@ -80,7 +23,7 @@ After: <br/>
 Code:<br/>
 ![alt text](./frontend/public/img/T1img4Q1.png)
 2) Change the button label in phone component from "Add" to e.g "Add Choiru’s Phone" (3 Marks)<br/>
-To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
+To do this task , we need to change code in ```NewPhone.js``` in ```components``` folder <br/>
 Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q2.png)
 ![alt text](./frontend/public/img/T1img2Q2.png)
@@ -90,7 +33,7 @@ After:<br/>
 
 3) Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories (3
 Marks)<br/>
-To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
+To do this task , we need to change code in ```NewPhone.js``` in ```components``` folder <br/>
 Before: <br/>
 ![alt text](./frontend/public/img/T1img1Q3.png)
 ![alt text](./frontend/public/img/T!img2Q3.png)
@@ -100,7 +43,7 @@ After: <br/>
 ![alt text](./frontend/public/img/T1img4Q3.png)
 
 4) In the <tr> element of the table, change the label "Name" to "Phone Type" (2 Marks)<br/>
-To do this task, We need to change code in ```Phonelist.js``` in components folder<br/>
+To do this task, We need to change code in ```Phonelist.js``` in ```components``` folder<br/>
 Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q4.png)
 ![alt text](./frontend/public/img/T1img2Q4.png)
@@ -290,7 +233,9 @@ X-Powered-By: Express
 ``` 
 Task 3: - DATABASE MODELLING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE
 DATABASE MODIFICATION DONE (22 MARKS)<br/>
-
+Before doing Task 3 or any tasks further that affects the database, we need to make a small change in ```app.js```<br/>
+This line of code will help us to easily make any change that related to the database<br/>
+![alt text](./frontend/public/img/T3img10.png) <br/>
 1) Modify the contacts Table (5 Marks):<br/>
 ``` bash
 a. Update the contacts table to include the following attributes:
@@ -298,11 +243,11 @@ i. id
 ii. Name
 iii. Address
 ```
-Code :  Change at contact.model.js file in models folder:
+Code :  Change at ```contact.model.js``` file in ```models``` folder:
 ![alt text](./frontend/public/img/T3img1Q1.png)
 Result in database:
 ![alt text](./frontend/public/img/T3img2Q1.png)
-2) Modify the phones Table (5 Marks):
+2) Modify the phones Table (5 Marks): <br/>
 ```bash
 a. Update the phones table to include the following attributes:
 i. id
@@ -310,29 +255,30 @@ ii. phone_type
 iii. phone_number
 iv. contactId
 ```
-Change code in phone.model.js file in models folder
+Change code in ```phone.model.js``` file in ```models``` folder to modify the attribute  <br/>
 ![alt text](./frontend/public/img/T3img1Q2.png)
 Result in database:
 ![alt text](./frontend/public/img/T3img2Q2.png)
 
 3) Adjust the Front-End (4 Marks):
-To change contact frontend, first we need to change create method in contact.controller.js  file to help us create a new phone with address attribute 
+To change contact frontend, first we need to change create method in ````contact.controller.js````  file in ```controllers``` folder to help us create a new phone with address attribute <br/>
 ![alt text](./frontend/public/img/T3img1Q3.png)
-After that we change code  in contact.js and NewContact.js in components folder to get the suitable frontend:
+After that we change code  in ```Contact.js``` and ```NewContact.js``` in components folder to get the suitable frontend:
 ![alt text](./frontend/public/img/T3img2Q3.png)
 ![alt text](./frontend/public/img/T3img3Q3.png)
 Result:
 ![alt text](./frontend/public/img/T3img4Q3.png)
-We do the same with Phone.Change code in create phone method in phone.controller.js 
+We do the same with Phone<br/>
+Change code in create phone method in ```phone.controller.js``` in controllers folder <br/>
 ![alt text](./frontend/public/img/T3img5Q3.png)
-Change at phone.js, PhoneList,js and NewPhone.js component to get the suitable frontend:
+Change at ```Phone.js```, ```PhoneList.js``` and ```NewPhone.js``` component to get the suitable frontend:
 ![alt text](./frontend/public/img/T3img6Q3.png)
 ![alt text](./frontend/public/img/T3img7Q3.png)
 ![alt text](./frontend/public/img/T3img8Q3.png)
 Result:
 ![alt text](./frontend/public/img/T3img9Q3.png)
-4) Test All APIs related to table modified contacts and phones (8 Marks):
-Contact API
+4) Test All APIs related to table modified contacts and phones (8 Marks): <br/>
+Contact API <br/>
 ### Add contact API (POST) 
 ``` bash
 http post http://localhost/api/contacts name="Khoa" address=”Ha Noi”
@@ -518,9 +464,9 @@ X-Powered-By: Express
 
 TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS
 1) Table creation  
-To create a table name "companies" , I will create a file named "company.model.js" in models folder
+To create a table name "companies" , I will create a file named "company.model.js" in ```models``` folder and defind all the attribute of this table in this file <br/>
 ![alt text](./frontend/public/img/T4img1Q1.png)
-After saving , this is the result in the database:
+After saving , this is the result in the database: <br/>
 ![alt text](./frontend/public/img/T4img2Q1.png)
 2) API Creation
 So , to creating new API, I defined routes in a file called "companies.routes.js" in routes folder
