@@ -67,8 +67,8 @@ Replace `container_ID` with the actual ID of the container you want to execute.
 ### Phone API
 
 Task 1
-1) Change the button label from contact component from "Delete" to "Delete Contact"
-Change at ```contact.js``` component
+1) Change the button label from contact component from "Delete" to "Delete Contact" <br/>
+Change at ```contact.js``` component <br/>
 
 Origin:<br/>
 ![alt text](./frontend/public/img/T1UIQ1.png)
@@ -79,7 +79,7 @@ After: <br/>
 ![alt text](./frontend/public/img/T1img3Q1.png)
 Code:<br/>
 ![alt text](./frontend/public/img/T1img4Q1.png)
-2) Change the button label in phone component from "Add" to e.g "Add Choiru’s Phone" (3 Marks)
+2) Change the button label in phone component from "Add" to e.g "Add Choiru’s Phone" (3 Marks)<br/>
 To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
 Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q2.png)
@@ -89,7 +89,7 @@ After:<br/>
 ![alt text](./frontend/public/img/T1img4Q2.png)
 
 3) Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories (3
-Marks)
+Marks)<br/>
 To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
 Before: <br/>
 ![alt text](./frontend/public/img/T1img1Q3.png)
@@ -99,8 +99,8 @@ After: <br/>
 ![alt text](./frontend/public/img/T1img3Q3.png)
 ![alt text](./frontend/public/img/T1img4Q3.png)
 
-4) In the <tr> element of the table, change the label "Name" to "Phone Type" (2 Marks)
-To do this task, We need to change code in ```Phonelist.js``` in components folder
+4) In the <tr> element of the table, change the label "Name" to "Phone Type" (2 Marks)<br/>
+To do this task, We need to change code in ```Phonelist.js``` in components folder<br/>
 Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q4.png)
 ![alt text](./frontend/public/img/T1img2Q4.png)
@@ -108,9 +108,9 @@ After: <br/>
 ![alt text](./frontend/public/img/T1img3Q4.png)
 ![alt text](./frontend/public/img/T1img4Q4.png)
 
-Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)
+Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)<br/>
 
-1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)
+1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)<br/>
 ```bash
 Get  contact API (GET):
 http get http://localhost/api/contacts
@@ -140,7 +140,7 @@ X-Powered-By: Express
     }
 ]
 ```
-2) Show the API command for “Add Contact” and provide a screenshot of the output (1 Mark)
+2) Show the API command for “Add Contact” and provide a screenshot of the output (1 Mark)<br/>
 ```bash
 Add contact API(POST):
 http post http://localhost/api/contacts name="Khoa"
@@ -162,7 +162,7 @@ X-Powered-By: Express
     "updatedAt": "2024-09-24T02:17:32.654Z"
 }
 ```
-3) Show the API command for “Delete Contact” and provide a screenshot of the output (1 Marks)
+3) Show the API command for “Delete Contact” and provide a screenshot of the output (1 Marks)<br/>
 ```bash
 Delete contact (DELETE)
 http delete  http://localhost/api/contacts/2
@@ -181,7 +181,7 @@ X-Powered-By: Express
     "message": "Contact was deleted successfully!"
 }
 ```
-4) Show the API command for “Update Contact” and provide a screenshot of the output (1 Marks)
+4) Show the API command for “Update Contact” and provide a screenshot of the output (1 Marks)<br/>
 ```bash
 Update contact (  PUT)
 http put http://localhost/api/contacts/1 name="HuyTrinh"
@@ -200,7 +200,7 @@ X-Powered-By: Express
     "message": "Contact was updated successfully."
 }
 ```
-5) Show the API command for “Show Phone” and provide a screenshot of the output (1 Mark)
+5) Show the API command for “Show Phone” and provide a screenshot of the output (1 Mark)<br/>
 ```bash
 Show phone (GET)
 http get http://localhost/api/contacts/3/phones
@@ -226,7 +226,7 @@ X-Powered-By: Express
     }
 ]
 ```
-6) Show the API command for “Add Phone” and provide a screenshot of the output (1 Marks)
+6) Show the API command for “Add Phone” and provide a screenshot of the output (1 Marks)<br/>
 ```bash
 Add phone (POST)
 http post http://localhost/api/contacts/3/phones name="Home" number="011111”
@@ -250,7 +250,7 @@ X-Powered-By: Express
     "updatedAt": "2024-09-24T02:58:48.330Z"
 }
 ```
-7) Show the API command for “Delete Phone” and provide a screenshot of the output (1 Marks)
+7) Show the API command for “Delete Phone” and provide a screenshot of the output (1 Marks)<br/>
 ```bash
 Delete phone (DELETE)
 http delete http://localhost/api/contacts/3/phones/4
@@ -269,7 +269,7 @@ X-Powered-By: Express
     "message": "Phone was deleted successfully!"
 }
 ```
-8) Show the API command for “Update Phone” and provide a screenshot of the output (1 Marks)
+8) Show the API command for “Update Phone” and provide a screenshot of the output (1 Marks)<br/>
 ```bash
 Update phone (PUT)
 http put http://localhost/api/contacts/3/phones/4 name="Work"
@@ -289,9 +289,9 @@ X-Powered-By: Express
 }
 ``` 
 Task 3: - DATABASE MODELLING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE
-DATABASE MODIFICATION DONE (22 MARKS)
+DATABASE MODIFICATION DONE (22 MARKS)<br/>
 
-1) Modify the contacts Table (5 Marks):
+1) Modify the contacts Table (5 Marks):<br/>
 ``` bash
 a. Update the contacts table to include the following attributes:
 i. id
