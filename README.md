@@ -63,117 +63,48 @@ Replace `container_ID` with the actual ID of the container you want to execute.
 
 ## Executing API
 
-### Contact API
-
-
-1. Add contacts API  (POST)
-```bash
-http post http://localhost/api/contacts name="Choiru"
-        
-choiruzain@MacMarichoy-7 TestSystem % http post http://localhost/api/contacts name="Choiru"
-HTTP/1.1 200 OK
-Access-Control-Allow-Origin: http://localhost:3000
-Connection: keep-alive
-Content-Length: 102
-Content-Type: application/json; charset=utf-8
-Date: Thu, 08 Aug 2024 21:01:53 GMT
-ETag: W/"66-FmPYAaIkyQoroDwP2JsAZjWTAxs"
-Server: nginx/1.25.1
-Vary: Origin
-X-Powered-By: Express
-
-{
-"createdAt": "2024-08-08T21:01:53.017Z",
-"id": 1,
-"name": "Choiru",
-"updatedAt": "2024-08-08T21:01:53.017Z"
-}
-
-```
-2 Get contacts API  (GET)
-
-```bash
-http get http://localhost/api/contacts
-
-
-choiruzain@MacMarichoy-7 TestSystem % http get http://localhost/api/contacts
-HTTP/1.1 200 OK
-Access-Control-Allow-Origin: http://localhost:3000
-Connection: keep-alive
-Content-Length: 104
-Content-Type: application/json; charset=utf-8
-Date: Thu, 08 Aug 2024 21:04:58 GMT
-ETag: W/"68-V+4KuL2xahYt8YAkKG6rKdR7wHg"
-Server: nginx/1.25.1
-Vary: Origin
-X-Powered-By: Express
-
-[
-{
-"createdAt": "2024-08-08T21:01:53.017Z",
-"id": 1,
-"name": "Choiru",
-"updatedAt": "2024-08-08T21:01:53.017Z"
-}
-]
-
-
-```
-3. Show/create the API commmand to delete the contacts (DELETE)
-
-```bash
-
-
-
-
-
-```
-
-4. Show/create the API command to edit the contacts (PUT)
-```
-http get http://localhost/api/contacts/1/phones
-
-```
 
 ### Phone API
 
 Task 1
 1) Change the button label from contact component from "Delete" to "Delete Contact"
-Change at contact.js component
+Change at ```contact.js``` component
 
-Origin: 
+Origin:<br/>
 ![alt text](./frontend/public/img/T1UIQ1.png)
-Code:
+Code:<br/>
 ![alt text](./frontend/public/img/T1img2.png)
 
-After: 
+After: <br/>
 ![alt text](./frontend/public/img/T1img3Q1.png)
-Code:
+Code:<br/>
 ![alt text](./frontend/public/img/T1img4Q1.png)
 2) Change the button label in phone component from "Add" to e.g "Add Choiru’s Phone" (3 Marks)
-Before:
+To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
+Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q2.png)
 ![alt text](./frontend/public/img/T1img2Q2.png)
-After:
+After:<br/>
 ![alt text](./frontend/public/img/T1img3Q2.png)
 ![alt text](./frontend/public/img/T1img4Q2.png)
 
 3) Change the placeholder text "Name" with input type text into a drop-down menu with 4 categories (3
 Marks)
-Before:
+To do this task , we need to change code in ```NewPhone.js``` in components folder <br/>
+Before: <br/>
 ![alt text](./frontend/public/img/T1img1Q3.png)
 ![alt text](./frontend/public/img/T!img2Q3.png)
 
-After:
+After: <br/>
 ![alt text](./frontend/public/img/T1img3Q3.png)
 ![alt text](./frontend/public/img/T1img4Q3.png)
 
 4) In the <tr> element of the table, change the label "Name" to "Phone Type" (2 Marks)
-
-Before:
+To do this task, We need to change code in ```Phonelist.js``` in components folder
+Before:<br/>
 ![alt text](./frontend/public/img/T1img1Q4.png)
 ![alt text](./frontend/public/img/T1img2Q4.png)
-After:
+After: <br/>
 ![alt text](./frontend/public/img/T1img3Q4.png)
 ![alt text](./frontend/public/img/T1img4Q4.png)
 
@@ -688,3 +619,7 @@ X-Powered-By: Express
     "message": "Company was deleted successfully!"
 }
 ```
+TASK 5 - FRONT END
+So in this task, I create 3 new file in the components folder. The first one is Newcompany.js<br/>
+This file will help me to create a new company using the CREATE method <br/>
+
