@@ -260,7 +260,7 @@ Change code in ```phone.model.js``` file in ```models``` folder to modify the at
 Result in database:
 ![alt text](./frontend/public/img/T3img2Q2.png)
 
-3) Adjust the Front-End (4 Marks):
+3) Adjust the Front-End (4 Marks):<br/>
 To change contact frontend, first we need to change create method in ````contact.controller.js````  file in ```controllers``` folder to help us create a new phone with address attribute <br/>
 ![alt text](./frontend/public/img/T3img1Q3.png)
 After that we change code  in ```Contact.js``` and ```NewContact.js``` in components folder to get the suitable frontend:
@@ -464,7 +464,7 @@ X-Powered-By: Express
 
 TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS
 1) Table creation  
-To create a table name "companies" , I will create a file named "company.model.js" in ```models``` folder and defind all the attribute of this table in this file <br/>
+To create a table name "companies" , I will create a file named "company.model.js" in ```models``` folder and define all the attribute of this table in this file <br/>
 ![alt text](./frontend/public/img/T4img1Q1.png)
 After saving , this is the result in the database: <br/>
 ![alt text](./frontend/public/img/T4img2Q1.png)
