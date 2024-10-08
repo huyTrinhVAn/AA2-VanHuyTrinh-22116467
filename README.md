@@ -660,7 +660,7 @@ module.exports = (sequelize, Sequelize) => {
 
 After saving , this is the result in the database: <br/>
 ![alt text](./frontend/public/img/T4img2Q1.png)
-2) API Creation
+2) API Creation <br/>
 So , to creating new API, I defined all routes of company table in a file called ```companies.routes.js``` in ```routes``` folder
 ```js
 module.exports = (app) => {
@@ -910,9 +910,204 @@ X-Powered-By: Express
     "message": "Company was deleted successfully!"
 }
 ```
+
 </details>
+<details>
+<summary>TASK 5 - FRONT END (30 MARKS)</summary>
 
-TASK 5 - FRONT END
-So in this task, I create 3 new file in the components folder. The first one is Newcompany.js<br/>
-This file will help me to create a new company using the CREATE method <br/>
+So in this task, I will create 3 new file in the ```components``` folder. They are ```Company.js``` ,```NewCompany.js```, ```CompanyList.js```<br/>
+Here’s a short summary of the functionality of the three files:<br/>
+```Company.js```: Manages individual company data, allowing for editing and deleting companies. It handles form updates and communicates with the backend to persist changes like company name or address. <br/>
 
+```NewCompany.js```: Provides the form and logic for creating new companies. It allows users to enter new company details, which are then sent to the backend to add a new company to the database.<br/>
+
+```CompanyList.js```: Displays a list of all companies associated with a contact. It fetches the company data from the backend and renders each company component, allowing for interactions like editing or deleting companies.<br/>
+
+And here is code of each file:<br/>
+```Company.js``` file:
+```js
+import { useState } from "react";
+
+function Company(props) {
+    const { contact, company, companies, setCompanies } = props;
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedName, setEditedName] = useState(company.company_name);
+    const [editedAddress, setEditedAddress] = useState(company.company_address);
+
+    // Update Company Function
+    async function updateCompany(e) {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${company.company_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    company_name: editedName,
+                    company_address: editedAddress,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update company: ${response.status} ${response.statusText}`);
+            }
+
+            const updatedCompany = await response.json();
+
+            if (!updatedCompany || !updatedCompany.company_id) {
+                throw new Error('Invalid data received from server');
+            }
+
+            // Update the company in the state
+            const updatedCompanies = companies.map((c) =>
+                c.company_id === updatedCompany.company_id ? updatedCompany : c
+            );
+            setCompanies(updatedCompanies);
+            setIsEditing(false);  // Exit editing mode
+
+        } catch (error) {
+            console.error('Error updating company:', error);
+            alert(`An error occurred while updating the company: ${error.message}`);
+        }
+    }
+
+    // Delete Company Function
+    async function deleteCompany() {
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/companies/${company.company_id}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            let newCompanies = companies.filter((c) => c.company_id !== company.company_id);
+            setCompanies(newCompanies);
+        } else {
+            console.error('Error deleting company');
+        }
+    }
+
+    return (
+        <tr>
+            {isEditing ? (
+                <>
+                    <td>
+                        <input
+                            type="text"
+                            value={editedName}
+                            onChange={(e) => setEditedName(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            type="text"
+                            value={editedAddress}
+                            onChange={(e) => setEditedAddress(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <button className="button green" onClick={updateCompany}>Save</button>
+                        <button className="button red" onClick={() => setIsEditing(false)}>Cancel</button>
+                    </td>
+                </>
+            ) : (
+                <>
+                    <td>{company.company_name}</td>
+                    <td>{company.company_address}</td>
+                    <td>
+                        <button className="button green" onClick={() => setIsEditing(true)}>Edit</button>
+                        <button className="button red" onClick={deleteCompany}>Delete</button>
+                    </td>
+                </>
+            )}
+        </tr>
+    );
+}
+
+export default Company;
+
+```
+```NewCompany.js``` file:
+```js
+import { useState } from "react";
+
+function NewCompany(props) {
+    const { contact, companies, setCompanies } = props;
+    const [company_name, setName] = useState('');
+    const [company_address, setAddress] = useState('');
+    async function createCompany(e) {
+        e.preventDefault();
+        const response = await fetch('http://localhost/api/contacts/' + contact.id + '/companies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                company_name,
+                company_address
+            })
+        });
+        const data = await response.json();
+        if (data.company_id) {
+            setCompanies([...companies, data]);
+        }
+        setName('');
+        setAddress('');
+    }
+    return (
+        <form onSubmit={createCompany} onClick={(e) => e.stopPropagation()} className="new-company" >
+            <input type="text" placeholder="Company Name" onChange={(e) => setName(e.target.value)} value={company_name} />
+            <input type="text" placeholder="Company Address" onChange={(e) => setAddress(e.target.value)} value={company_address} />
+            <button className='button green' type='submit'>Add {contact.name}'s company</button>
+        </form>
+    );
+}
+export default NewCompany;
+```
+```CompanyList.js``` file:
+```js 
+import { useState, useEffect } from "react";
+import NewCompany from "./NewCompany.js"
+import Company from "./Company.js";
+
+function CompanyList(props) {
+    const { contact, companies, setCompanies } = props;
+    useEffect(() => {
+        // Fetch companies for the contact when the component mounts
+        fetch(`http://localhost/api/contacts/${contact.id}/companies`)
+            .then(response => response.json())
+            .then(data => setCompanies(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, [contact.id, setCompanies]);
+
+    return (
+        <div className="phone-list">
+            <h2>Companies for {contact.name}</h2>
+            <NewCompany contact={contact} companies={companies} setCompanies={setCompanies} />
+            <table onClick={(e) => e.stopPropagation()}>
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Company Address</th>
+                        <th>Modification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        companies.map((company) => {
+                            return (
+                                <Company key={company.company_id} company={company} companies={companies} setCompanies={setCompanies} contact={contact} />
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+    );
+}
+export default CompanyList;
+```
+And this is the result:<br/>
+
+</details>
