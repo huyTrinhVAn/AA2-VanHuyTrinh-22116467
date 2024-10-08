@@ -8,9 +8,10 @@ Van Huy Trinh's shared repository: https://github.com/huyTrinhVAn/AA2-VanHuyTrin
 
 
 ### Phone API
-
+<details>
+<summary>Task 1</summary>
 Task 1
-1) Change the button label from contact component from "Delete" to "Delete Contact" <br/>
+1. Change the button label from contact component from "Delete" to "Delete Contact" <br/>
 Change at ```contact.js``` in  ```components``` folder <br/>
 
 Origin:<br/>
@@ -50,7 +51,7 @@ Before:<br/>
 After: <br/>
 ![alt text](./frontend/public/img/T1img3Q4.png)
 ![alt text](./frontend/public/img/T1img4Q4.png)
-
+</details>
 Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)<br/>
 
 1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)<br/>
