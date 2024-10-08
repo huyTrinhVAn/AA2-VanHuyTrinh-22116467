@@ -10,15 +10,15 @@ Van Huy Trinh's shared repository: https://github.com/huyTrinhVAn/AA2-VanHuyTrin
 ### Phone API
 <details>
 <summary>Task 1</summary>
-Task 1
 1. Change the button label from contact component from "Delete" to "Delete Contact" <br/>
 Change at ```contact.js``` in  ```components``` folder <br/>
 
 Origin:<br/>
 ![alt text](./frontend/public/img/T1UIQ1.png)
 Code:<br/>
-![alt text](./frontend/public/img/T1img2.png)
-
+``` js
+<button className='button red' onClick={doDelete}>Delete</button>
+```
 After: <br/>
 ![alt text](./frontend/public/img/T1img3Q1.png)
 Code:<br/>
