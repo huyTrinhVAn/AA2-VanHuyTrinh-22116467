@@ -1109,5 +1109,147 @@ function CompanyList(props) {
 export default CompanyList;
 ```
 And this is the result:<br/>
+![alt text](./frontend/public/img/T5img10.png)
+</details>
 
+<details>
+<summary>BONUS IN  PHONE API</summary>
+
+I added edit function in Phone. And to do this, I have to repair the UPDATE method in ```phone.controllers.js``` a little bit.<br/>
+```js
+// Update one phone by id
+exports.update = async (req, res) => {
+    const phoneId = req.params.phoneId;
+    const contactId = req.params.contactId;
+
+    try {
+        // Update the phone details in the database
+        const [num] = await Phones.update(req.body, {
+            where: { id: phoneId, contactId: contactId }
+        });
+
+        if (num === 1) {
+            // Fetch the updated phone to return it to the frontend
+            const updatedPhone = await Phones.findOne({
+                where: { id: phoneId, contactId: contactId }
+            });
+
+            if (updatedPhone) {
+                return res.status(200).json(updatedPhone); // Send the updated phone data
+            } else {
+                return res.status(404).json({ message: "Phone not found after update" });
+            }
+        } else {
+            return res.status(400).json({ message: `Cannot update Phone with id=${phoneId}. Phone not found or request body is empty.` });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: "Error updating phone with id=" + phoneId });
+    }
+};
+```
+And change the code in ```Phone.js``` in ```components``` folder :
+```js
+import { useState } from "react";
+
+function Phone(props) {
+    const { contact, phone, phones, setPhones } = props;
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedType, setEditedType] = useState(phone.phone_type);
+    const [editedNumber, setEditedNumber] = useState(phone.phone_number);
+
+    // Update Phone Function
+    async function updatePhone(e) {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(`http://localhost/api/contacts/${contact.id}/phones/${phone.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phone_type: editedType,
+                    phone_number: editedNumber,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update phone: ${response.status} ${response.statusText}`);
+            }
+
+            const updatedPhone = await response.json();
+
+            if (!updatedPhone || !updatedPhone.id) {
+                throw new Error('Invalid data received from server');
+            }
+
+            // Update the phone in the state
+            const updatedPhones = phones.map((p) =>
+                p.id === updatedPhone.id ? updatedPhone : p
+            );
+            setPhones(updatedPhones);
+            setIsEditing(false); // Exit editing mode
+
+        } catch (error) {
+            console.error('Error updating phone:', error);
+            alert(`An error occurred while updating the phone: ${error.message}`);
+        }
+    }
+
+    // Delete Phone Function
+    async function deletePhone() {
+        const response = await fetch(`http://localhost/api/contacts/${contact.id}/phones/${phone.id}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            let newPhones = phones.filter((p) => p.id !== phone.id);
+            setPhones(newPhones);
+        } else {
+            console.error('Error deleting phone');
+        }
+    }
+
+    return (
+        <tr>
+            {isEditing ? (
+                <>
+                    <td>
+                        <input
+                            type="text"
+                            value={editedType}
+                            onChange={(e) => setEditedType(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            type="text"
+                            value={editedNumber}
+                            onChange={(e) => setEditedNumber(e.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <button className="button green" onClick={updatePhone}>Save</button>
+                        <button className="button red" onClick={() => setIsEditing(false)}>Cancel</button>
+                    </td>
+                </>
+            ) : (
+                <>
+                    <td>{phone.phone_type}</td>
+                    <td>{phone.phone_number}</td>
+                    <td>
+                        <button className="button green" onClick={() => setIsEditing(true)}>Edit</button>
+                        <button className="button red" onClick={deletePhone}>Delete</button>
+                    </td>
+                </>
+            )}
+        </tr>
+    );
+}
+
+export default Phone;
+
+```
+And this is the result:<br/>
+![alt text](./frontend/public/img/T5img11.png)
 </details>
