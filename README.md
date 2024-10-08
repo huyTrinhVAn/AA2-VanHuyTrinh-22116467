@@ -625,21 +625,202 @@ X-Powered-By: Express
 }
 ```
 </details>
+<details>
+<summary>TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS</summary>
 
-TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS
-1) Table creation  
-To create a table name "companies" , I will create a file named "company.model.js" in ```models``` folder and define all the attribute of this table in this file <br/>
-![alt text](./frontend/public/img/T4img1Q1.png)
+1) Table creation <br/>
+To create a table name "companies" , I will create a file named ```company.model.js``` in ```models``` folder and define all the attribute of this table in this file <br/>
+```js
+module.exports = (sequelize, Sequelize) => {
+    const Company = sequelize.define("company", {
+        company_id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        company_name: {
+            type: Sequelize.STRING,
+
+        },
+        company_address: {
+            type: Sequelize.STRING,
+        },
+        contact_id: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'contacts', // Name of the target table (must be 'contacts' in DB)
+                key: 'id', // Foreign key referring to contact id
+            }
+        }
+    });
+
+    return Company;
+};
+```
+
 After saving , this is the result in the database: <br/>
 ![alt text](./frontend/public/img/T4img2Q1.png)
 2) API Creation
-So , to creating new API, I defined routes in a file called "companies.routes.js" in routes folder
-![alt text](./frontend/public/img/T4img1Q2.png)
-And to define method in each route, I make a new file named company.controller.js in controller folder
-![alt text](./frontend/public/img/T4img2Q2.png)
-And to make all of these things worked, I have to define them in app,js file 
-![alt text](./frontend/public/img/T4img3Q2.png)
-And now this is API test result:
+So , to creating new API, I defined all routes of company table in a file called ```companies.routes.js``` in ```routes``` folder
+```js
+module.exports = (app) => {
+    const companies = require("../controllers/company.controller.js");
+    const router = require("express").Router();
+
+    // Create a company for a contact
+    router.post("/contacts/:contactId/companies", companies.create);
+
+    // Get all companies for a contact
+    router.get("/contacts/:contactId/companies", companies.findAll);
+
+    // Get a specific company for a contact
+    router.get("/contacts/:contactId/companies/:companyId", companies.findOne);
+
+    // Update a specific company for a contact
+    router.put("/contacts/:contactId/companies/:companyId", companies.update);
+
+    // Delete a company for a contact
+    router.delete("/contacts/:contactId/companies/:companyId", companies.delete);
+
+    // Register the routes under the /api prefix
+    app.use('/api', router);
+};
+```
+
+And to define  method for each route, I make a new file named ```company.controller.js``` in ```controller``` folder
+```js
+const { where } = require("sequelize");
+const db = require("../models");
+
+const companies = db.companies;
+
+const Op = db.Sequelize.Op;
+
+// Create company 
+
+exports.create = (req, res) => {
+    // validate request
+    const company = {
+        company_name: req.body.company_name,
+        company_address: req.body.company_address,
+        contact_id: parseInt(req.params.contactId)
+    };
+    //  Save compay in the database
+
+    companies.create(company)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Company"
+            });
+        });
+};
+// GEt all companies for a contact
+
+exports.findAll = (req, res) => {
+    companies.findAll({
+        where: {
+            contact_id: parseInt(req.params.contactId)
+        }
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occured"
+            })
+        })
+}
+// Get a specific company for a contact
+
+exports.findOne = (req, res) => {
+    companies.findOne({
+        where: {
+            contact_id: req.params.contactId,
+            company_id: req.params.companyId
+        }
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred with" + req.params.company_id
+            })
+        })
+}
+// Update a specific company for a contact
+
+exports.update = async (req, res) => {
+    const company_id = req.params.companyId;
+    const contact_id = req.params.contactId;
+
+    try {
+        // Update the company details in the database
+        const [num] = await companies.update(req.body, {
+            where: { company_id: company_id, contact_id: contact_id }
+        });
+        if (num === 1) {
+            // Fetch the updated company to return it to the frontend
+            const updatedCompany = await companies.findOne({
+                where: { company_id: company_id, contact_id: contact_id }
+            });
+
+            if (updatedCompany) {
+                return res.status(200).json(updatedCompany); // Send the updated company data
+            } else {
+                return res.status(404).json({ message: "Company not found after update" });
+            }
+        } else {
+            return res.status(400).json({ message: `Cannot update Company with id=${company_id}. Company not found or request body is empty.` });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: "Error updating company with id=" + company_id });
+    }
+};
+
+
+//  Delete a company for a contact
+
+
+exports.delete = (req, res) => {
+    const company_id = req.params.companyId;
+
+    companies.destroy({
+        where: { company_id: company_id, contact_id: req.params.contactId } // Ensuring deletion by both IDs
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Company was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Company with id=${company_id}`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete company with id=" + company_id
+            });
+        });
+};
+
+```
+
+And to make all of these things worked, I have to define them in ```app.js``` file :<br/>
+```js
+require("./routes/contacts.routes")(app);
+require("./routes/phones.routes")(app);
+require("./routes/companies.routes")(app);
+require("./routes/stats.routes")(app);
+```
+And now this is API test result: <br/>
 ### ADD COMPANY API (POST)
 ```bash
 http post http://localhost/api/contacts/1/companies company_name="VietTel" company_address="HaNoi"
@@ -729,6 +910,8 @@ X-Powered-By: Express
     "message": "Company was deleted successfully!"
 }
 ```
+</details>
+
 TASK 5 - FRONT END
 So in this task, I create 3 new file in the components folder. The first one is Newcompany.js<br/>
 This file will help me to create a new company using the CREATE method <br/>
