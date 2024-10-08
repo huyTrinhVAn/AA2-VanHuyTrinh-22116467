@@ -34,7 +34,6 @@ Before:<br/>
 <button className='button green' type='submit'>Add</button>
 ```
 After:<br/>
-![alt text](./frontend/public/img/T1img3Q2.png)
 ```js
 <button className='button green' type='submit'>Add {contact.name}'s phone</button>
 ```
@@ -350,17 +349,95 @@ exports.create = (req, res) => {
 };
 ```
 After that we change code  in ```Contact.js``` and ```NewContact.js``` in components folder to get the suitable frontend:
-![alt text](./frontend/public/img/T3img2Q3.png)
-![alt text](./frontend/public/img/T3img3Q3.png)
+```js
+   return (
+        <div key={contact.id} className='contact' onClick={(e) => setExpanded(!expanded)}>
+            <div className='title'>
+                <div>
+                    <h3>Name: {contact.name}</h3>
+                </div>
+                <div>
+                    <h3>Address: {contact.address}</h3>
+                </div>
+                <button className='button red' onClick={doDelete}>Delete Contact</button>
+            </div>
+            <div style={expandStyle}>
+                <hr />
+                <PhoneList phones={phones} setPhones={setPhones} contact={contact} />
+                <CompanyList companies={companies} setCompanies={setCompanies} contact={contact} />
+            </div>
+        </div>
+    );
+```
+
+```js
+ return (
+        <form className='new-contact' onSubmit={createContact}>
+            <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)} value={name} />
+            <input
+                type='text'
+                placeholder='Address'
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+            />
+            <button className='button green' type='submit'>Create Contact</button>
+        </form>
+    );
+```
 Result:
 ![alt text](./frontend/public/img/T3img4Q3.png)
 We do the same with Phone<br/>
-Change code in create phone method in ```phone.controller.js``` in controllers folder <br/>
-![alt text](./frontend/public/img/T3img5Q3.png)
-Change at ```Phone.js```, ```PhoneList.js``` and ```NewPhone.js``` component to get the suitable frontend:
-![alt text](./frontend/public/img/T3img6Q3.png)
-![alt text](./frontend/public/img/T3img7Q3.png)
-![alt text](./frontend/public/img/T3img8Q3.png)
+Change code in create phone method in ```phone.controller.js``` in ```controllers``` folder <br/>
+```js
+exports.create = (req, res) => {
+    const phone = {
+        phone_type: req.body.phone_type,
+        phone_number: req.body.phone_number,
+        contactId: parseInt(req.params.contactId)
+    };
+
+    Phones.create(phone)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred"
+            });
+        });
+};
+```
+
+Change code at ```Phone.js```, ```PhoneList.js``` and ```NewPhone.js``` component to get the suitable frontend:<br/>
+```NewPhone.js``` file: <br/>
+Code from :
+```js
+const [number, setNumber] = useState('');
+const [name, setName] = useState('');
+```
+```js
+<select onChange={e => setName(e.target.value)} value={name} >
+<input type='text' placeholder='Phone Number' onChange={(e) => setNumber(e.target.value)} value={number} />
+```
+To:<br/>
+```js
+const [phone_number, setNumber] = useState('');
+const [phone_type, setName] = useState('');
+```
+```js
+<input type='text' placeholder='Phone Number' onChange={(e) => setNumber(e.target.value)} value={phone_number} />
+```
+```Phone.js``` file : <br/>
+```js
+<td>{phone.phone_type}</td>
+<td>{phone.phone_number}</td>
+```
+```PhoneList.js```
+```js
+<th>Phone Type</th>
+<th>Phone Number</th>
+```
 Result:
 ![alt text](./frontend/public/img/T3img9Q3.png)
 4) Test All APIs related to table modified contacts and phones (8 Marks): <br/>
