@@ -9,8 +9,9 @@ Van Huy Trinh's shared repository: https://github.com/huyTrinhVAn/AA2-VanHuyTrin
 
 ### Phone API
 <details>
-<summary>Task 1</summary>
-1. Change the button label from contact component from "Delete" to "Delete Contact" <br/>
+<summary>TASK 1 - USER INTERFACE CHANGES</summary>
+
+1) Change the button label from contact component from "Delete" to "Delete Contact" <br/>
 Change at ```contact.js``` in  ```components``` folder <br/>
 
 Origin:<br/>
@@ -71,7 +72,6 @@ After: <br/>
 </details>
 <details>
 <summary>Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)</summary>
-Task 2: API COMMAND DEMONSTRATIONS (8 MARKS)<br/>
 
 1) Show the API command for “Show Contact” and provide a screenshot of the output (1 Mark)<br/>
 ```bash
@@ -253,11 +253,16 @@ X-Powered-By: Express
 ``` 
 </details>
 
-Task 3: - DATABASE MODELLING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE
-DATABASE MODIFICATION DONE (22 MARKS)<br/>
+<details>
+<summary>Task 3: - DATABASE MODELLING WITH SEQUELIZE AND TEST THE API COMMANDS WHEN THE DATABASE MODIFICATION DONE (22 MARKS)</summary>
+
 Before doing Task 3 or any tasks further that affects the database, we need to make a small change in ```app.js```<br/>
 This line of code will help us to easily make any change that related to the database<br/>
-![alt text](./frontend/public/img/T3img10.png) <br/>
+```js
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Database synced and updated if necessary.");
+});
+```
 1) Modify the contacts Table (5 Marks):<br/>
 ``` bash
 a. Update the contacts table to include the following attributes:
@@ -265,8 +270,26 @@ i. id
 ii. Name
 iii. Address
 ```
-Code :  Change at ```contact.model.js``` file in ```models``` folder:
-![alt text](./frontend/public/img/T3img1Q1.png)
+Code :  Change code  at ```contact.model.js``` file in ```models``` folder. I added address attribute in this table <br/>
+```js
+module.exports = (sequelize, Sequelize) => {
+    const Contact = sequelize.define("contact", {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        name: {
+            type: Sequelize.STRING,
+        },
+        address: {
+            type: Sequelize.STRING
+        }
+    });
+
+    return Contact;
+};
+```
 Result in database:
 ![alt text](./frontend/public/img/T3img2Q1.png)
 2) Modify the phones Table (5 Marks): <br/>
@@ -278,13 +301,54 @@ iii. phone_number
 iv. contactId
 ```
 Change code in ```phone.model.js``` file in ```models``` folder to modify the attribute  <br/>
-![alt text](./frontend/public/img/T3img1Q2.png)
+```js
+module.exports = (sequelize, Sequelize) => {
+    const Phone = sequelize.define("phone", {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        phone_type: {
+            type: Sequelize.STRING
+        },
+        phone_number: {
+            type: Sequelize.STRING
+        },
+        contactId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'contacts',
+                key: 'id',
+            }
+        }
+    });
+    return Phone;
+};
+```
 Result in database:
 ![alt text](./frontend/public/img/T3img2Q2.png)
 
 3) Adjust the Front-End (4 Marks):<br/>
 To change contact frontend, first we need to change create method in ````contact.controller.js````  file in ```controllers``` folder to help us create a new phone with address attribute <br/>
-![alt text](./frontend/public/img/T3img1Q3.png)
+```js
+exports.create = (req, res) => {
+    const contact = {
+        name: req.body.name,
+        address: req.body.address
+    };
+    Contacts.create(contact)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred"
+            });
+        });
+};
+```
 After that we change code  in ```Contact.js``` and ```NewContact.js``` in components folder to get the suitable frontend:
 ![alt text](./frontend/public/img/T3img2Q3.png)
 ![alt text](./frontend/public/img/T3img3Q3.png)
@@ -483,6 +547,7 @@ X-Powered-By: Express
     "message": "Phone was deleted successfully!"
 }
 ```
+</details>
 
 TASK 4 - EXPANDING THE EXISTING TABLES (E.G. COMPANY) - 30 MARKS
 1) Table creation  
